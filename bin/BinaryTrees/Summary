@@ -1,0 +1,90 @@
+一、BST添加结点
+  1、rootNode==null
+ 2、rootNode!=null
+   ——>找到父节点
+    ——>创建新的结点
+     ——>添加：parentNode.rightNode=node;或parentNode.lefttNode=node;
+   【扩充】比较器:comparable/comparator/匿名比较器
+ 
+ 二、BST删除结点
+ 1、度为0的结点：直接删除
+ 2、度为1的结点：用子节点替代原结点的位置
+ node是左子结点：child.parent=node.parent;node.parent.left=child;
+ node是右子结点：child.parent=node.parent;node.parent.right=child;
+ node是根节点： root=child;child.parent=null;
+3、度为2的结点
+  ——>先用前去或者后继结点的值覆盖原结点的值
+  ——>然后删除相应的前驱或者后继节点
+  ——>【如果一个结点的度为2，那么它的前驱后继结点的度只能是0和1】
+ 
+ 三、二叉树的遍历
+ 1、前序遍历--根左右
+ 2、中序遍历--左根右
+ 3、后序遍历--左右根
+ 4、层序遍历
+     实现思路：使用队列
+     ——>将根节点入队;
+     ——>循环执行以下操作，直到队列为空;
+     ——>将队结点出队，进行访问;
+     ——>将对节点的左子结点和右子结点入队。
+ 
+ 四、二叉树的前驱节点和后继节点
+ 1、前驱节点
+ 定义：中序遍历的前一个结点
+ 实现思路：
+ -->node.left!=null;
+    -->predecessor=node.left.right.right..(左子树最右边的结点 )
+      -->终止条件：right=null;
+ -->node.left==null&&node.parentNode!=null;
+    -->predecessor=node.parent.parent...
+      -->终止条件：node在parent的右子树中
+ -->node.left==null&&node.parentNode==null;
+    -->没有前驱节点
+ 2、后继节点
+ 定义：中序遍历的后一个结点
+实现思路：
+-->node.right!=null;
+    -->predecessor=node.right.left.left..(左子树最右边的结点 )
+      -->终止条件：left=null;
+ -->node.right==null&&node.parentNode!=null;
+    -->predecessor=node.parent.parent...
+      -->终止条件：node在parent的左子树中
+ -->node.left==null&&node.parentNode==null;
+    -->没有后继节点
+
+ 五、二叉树练习扩展
+ 1、计算二叉树高度
+ 递归方法：取左右子树最大高度
+ 非递归方法：利用层次遍历
+ ——>每遍历完一层结点，高度加1
+ 2、完全二叉树的判断
+ 实现思路：层次遍历二叉树（用队列）
+ ——> node.left!=null && node.right!=null,将左右子节点入队
+ ——>node.left==null && node.right!=null,返回false;
+ ——> node.left!=null && node.right==null
+             那么其后面都是叶子结点，才是完全二叉树，否则返回false。
+ 3、翻转二叉树
+实现思路：利用前序中序后序层序遍历
+ ——>遍历所有结点，然后交换左右子节点。
+ 
+ 六、比较器
+ /*
+	 自定义比较器
+	@SuppressWarnings("unused")
+	private static class PersonComparator1 implements Comparator<Person>{
+		public int compare(Person e1,Person e2) {
+			return e2.getAge()-e1.getAge();
+		}
+	}
+	BinarySearchTree<Person> bst1 = new BinarySearchTree<>(new PersonComparator1());
+		
+	匿名类比较器对象
+		 BinarySearchTree<Person> bst1=new BinarySearchTree<>(new Comparator<Person>() {
+			@Override
+			public int compare(Person e1, Person e2) {
+				return e2.getAge()-e1.getAge();
+			}
+			
+		});
+*/
+ 
